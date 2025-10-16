@@ -1,0 +1,87 @@
+# macOS
+.DS_Store
+
+
+# Build directories and artifacts
+build/
+bin/
+out/
+dist/
+cmake-build-*/
+cmake-build*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+Makefile
+
+# Compiled object and binary files
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app
+
+# Static / intermediate files
+*.pyc
+*.pyo
+
+# Xcode (if used)
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+*.xcuserstate
+DerivedData/
+*.xcconfig
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xccheckout
+
+# IDE / editor folders
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Debugging and profiling
+*.dSYM/
+*.stackdump
+*.prof
+*.mem
+*.log
+*.trace
+
+# Coverage
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# Package managers / vendored libs
+vendor/
+third_party/
+extern/
+
+# Temp / backup files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Other generated files
+tags
+Tag*
+cscope.*
