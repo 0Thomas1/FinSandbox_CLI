@@ -80,7 +80,7 @@ extern/
 *.temp
 *.bak
 *.orig
-
+*.json
 
 # Other generated files
 tags
