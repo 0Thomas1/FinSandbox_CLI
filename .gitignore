@@ -86,3 +86,6 @@ extern/
 tags
 Tag*
 cscope.*
+
+#Environment variables
+.env
