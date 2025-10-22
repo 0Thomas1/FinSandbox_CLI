@@ -1,9 +1,11 @@
 #include "MarketData.h"
+#include "Portfolio.h"
 #include <iostream>
 
 #include <fstream>
 #include <string>
 #include <unordered_map>
+
 
 std::unordered_map<std::string, std::string> loadEnv(const std::string& filename) {
     std::unordered_map<std::string, std::string> env;
@@ -27,6 +29,12 @@ std::unordered_map<std::string, std::string> loadEnv(const std::string& filename
     return env;
 }
 
+void toupper(std::string& string){
+    for(char& c :string){
+        c = std::toupper(static_cast<unsigned char>(c));
+    }
+}
+
 int main() {
     MarketData md;
     auto env = loadEnv(".env");
@@ -35,18 +43,39 @@ int main() {
         std::cerr << "API_KEY not found in .env file.\n";
         return 1;
     }
-
     md.loadFromAPI("AAPL", apiKey);
 
-    const auto& prices = md.getPrices("AAPL");
-    if (!prices.empty()) {
-        std::cout << "Latest Close: " << prices.front().close << "\n";
-    } else {
-        std::cout << "No price data available for AAPL.\n";
-    }
-    return 0;
+    Portfolio pf(20000.0);
+    pf.print();
 
-    // auto env = loadEnv(".env");
-    // std::cout << env["API_KEY"] << "\n";
-    // return 0;
+    std::string cmd;
+        while (true) {
+        std::cout << "\n> ";
+        std::cin >> cmd;
+        if (cmd == "exit") break;
+        else if(cmd == "buy"){
+            std::string symbol;
+            std::string shareStr;
+            std::cin >> symbol >> shareStr;
+
+            toupper(symbol);
+
+            std::vector<PriceRecord> prices = md.getPrices(symbol);
+            int shares = std::atoi(shareStr.c_str());
+            if (prices.empty()|| shares == 0){
+                std::cerr << "Symbol not exist or in valid shares" << std::endl;
+                continue;
+            }
+            
+            pf.buy(symbol, shares, prices.front().close);
+        }
+        else if (cmd == "show") {
+            pf.print();
+        }
+        else {
+            std::cout << "Commands: buy [symbol] [shares], sell [symbol] [shares], show, exit\n";
+        }
+    }
+
+    return 0;
 }
