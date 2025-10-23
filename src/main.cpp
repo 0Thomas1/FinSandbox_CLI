@@ -63,11 +63,27 @@ int main() {
             std::vector<PriceRecord> prices = md.getPrices(symbol);
             int shares = std::atoi(shareStr.c_str());
             if (prices.empty()|| shares == 0){
-                std::cerr << "Symbol not exist or in valid shares" << std::endl;
+                std::cerr << "Symbol not exist or invalid shares" << std::endl;
                 continue;
             }
             
             pf.buy(symbol, shares, prices.front().close);
+        }
+        else if(cmd =="sell"){
+            std::string symbol;
+            std::string shareStr;
+            std::cin >> symbol >> shareStr;
+
+            toupper(symbol);
+
+            std::vector<PriceRecord> prices = md.getPrices(symbol);
+            int shares = std::atoi(shareStr.c_str());
+            if (prices.empty()|| shares == 0){
+                std::cerr << "Symbol not exist or invalid shares" << std::endl;
+                continue;
+            }
+            
+            pf.sell(symbol, shares, prices.front().close);
         }
         else if (cmd == "show") {
             pf.print();
