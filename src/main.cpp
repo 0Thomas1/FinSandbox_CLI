@@ -1,5 +1,8 @@
 #include "MarketData.h"
 #include "Portfolio.h"
+#include "TradeHistory.h"
+#include "Simulator.h"
+
 #include <iostream>
 
 #include <fstream>
@@ -43,55 +46,18 @@ int main() {
         std::cerr << "API_KEY not found in .env file.\n";
         return 1;
     }
-    md.loadFromAPI("AAPL", apiKey);
+    md.loadFromAPI("SOXL", apiKey);
 
-    Portfolio pf(20000.0);
+    Portfolio pf(10000.0);
+    TradeHistory th;
+    Simulator sim(md, pf, th);
+
+    sim.run("SOXL", 0, 99);  // simulate over 100 days
+
+    std::cout << "\nFinal Portfolio Value: $"
+              << pf.getCash() << " + holdings value\n";
     pf.print();
-
-    std::string cmd;
-        while (true) {
-        std::cout << "\n> ";
-        std::cin >> cmd;
-        if (cmd == "exit") break;
-        else if(cmd == "buy"){
-            std::string symbol;
-            std::string shareStr;
-            std::cin >> symbol >> shareStr;
-
-            toupper(symbol);
-
-            std::vector<PriceRecord> prices = md.getPrices(symbol);
-            int shares = std::atoi(shareStr.c_str());
-            if (prices.empty()|| shares == 0){
-                std::cerr << "Symbol not exist or invalid shares" << std::endl;
-                continue;
-            }
-            
-            pf.buy(symbol, shares, prices.front().close);
-        }
-        else if(cmd =="sell"){
-            std::string symbol;
-            std::string shareStr;
-            std::cin >> symbol >> shareStr;
-
-            toupper(symbol);
-
-            std::vector<PriceRecord> prices = md.getPrices(symbol);
-            int shares = std::atoi(shareStr.c_str());
-            if (prices.empty()|| shares == 0){
-                std::cerr << "Symbol not exist or invalid shares" << std::endl;
-                continue;
-            }
-            
-            pf.sell(symbol, shares, prices.front().close);
-        }
-        else if (cmd == "show") {
-            pf.print();
-        }
-        else {
-            std::cout << "Commands: buy [symbol] [shares], sell [symbol] [shares], show, exit\n";
-        }
-    }
-
     return 0;
 }
+
+ 
