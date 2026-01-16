@@ -25,14 +25,18 @@ void Simulator::run(const std::string& symbol, int startIdx, int endIdx) {
 
         // Simple strategy example:
         // Buy if price drops below $150, sell if above $200
-        if(i >= 7 && (prices[i-7].close - p.close)/p.close <= -0.05){
-           if(portfolio.buy(symbol,10,p.close)){
-                history.record({p.date, symbol, "BUY", 10, p.close, portfolio.getCash()});
+        double lastWkClose = prices[i-7].close;
+        double tdyClose = p.close;
+        if(i >= 7 && (tdyClose - lastWkClose)/ lastWkClose <= -0.05){
+            int shares = portfolio.buyMax(symbol,p.close);
+           if(shares > 0){
+                history.record({p.date, symbol, "BUY", shares, p.close, portfolio.getCash()});
            }
         }
-        else if(i >= 7 && (prices[i-7].close - p.close)/p.close >= 0.1){
-            if(portfolio.sell(symbol,10,p.close)){
-                history.record({p.date, symbol, "SELL", 10, p.close, portfolio.getCash()});
+        else if(i >= 7 && (tdyClose - lastWkClose)/ lastWkClose >= 0.1){
+            int shares = portfolio.sellMax(symbol,p.close);
+            if(shares > 0){
+                history.record({p.date, symbol, "SELL", shares, p.close, portfolio.getCash()});
            }
         }
         

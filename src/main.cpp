@@ -46,13 +46,13 @@ int main() {
         std::cerr << "API_KEY not found in .env file.\n";
         return 1;
     }
-    md.loadFromAPI("SOXL", apiKey);
+    md.loadFromAPI("ABAT", apiKey);
 
     Portfolio pf(10000.0);
     TradeHistory th;
     Simulator sim(md, pf, th);
 
-    sim.run("SOXL", 0, 99);  // simulate over 100 days
+    sim.run("ABAT", 0, 365 * 10);  // simulate over 10 years
 
     std::cout << "\nFinal Portfolio Value: $"
               << pf.getCash() << " + holdings value\n";

@@ -20,7 +20,13 @@ bool Portfolio::buy(const std::string& symbol, int shares, double price){
     std::cout << "Bought " << symbol << " x" << shares << " at $" << price << "\n";
     return true;
 }
-
+int Portfolio::buyMax(const std::string& symbol, double price){
+    int shares = floor(cash / price);
+    if (buy(symbol,shares,price)){
+        return shares;
+    }
+    return 0;
+}
 bool Portfolio::sell(const std::string& symbol, int shares, double price) {
     if (holdings[symbol] < shares) {
         std::cerr << "Not enough shares of " << symbol << " to sell.\n";
@@ -30,6 +36,13 @@ bool Portfolio::sell(const std::string& symbol, int shares, double price) {
     cash += shares * price;
     std::cout << "Sold " << shares << " shares of " << symbol << " at $" << price << "\n";
     return true;
+}
+int Portfolio::sellMax(const std::string& symbol, double price){
+    int shares = holdings[symbol];
+    if (sell(symbol,shares,price)){
+        return shares;
+    }
+    return 0;
 }
 
 double Portfolio::getCash() const {

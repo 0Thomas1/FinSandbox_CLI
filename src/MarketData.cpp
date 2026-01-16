@@ -11,9 +11,10 @@ void MarketData::loadFromAPI(const std::string& symbol, const std::string& apiKe
     std::string outFile = "../data/" + symbol + ".json";
 
     std::string url =
-        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
+        "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY"
         "&symbol=" + symbol +
-        "&apikey=" + apiKey;
+        "&apikey=" + apiKey +
+        "&outputsize=full";
     std::string command = "curl -s \"" + url + "\" -o " + outFile;
     int code = system(command.c_str());
     if (code != 0) {
