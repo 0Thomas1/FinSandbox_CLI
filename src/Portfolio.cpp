@@ -1,4 +1,5 @@
 #include "Portfolio.h"
+#include <cmath>
 
 Portfolio::Portfolio(double initialCash) : cash(initialCash) {}
 
