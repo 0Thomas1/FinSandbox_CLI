@@ -2,4 +2,3 @@
 cd build
 cmake ..
 cmake --build .
-./finsandbox

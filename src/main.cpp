@@ -38,6 +38,7 @@ void toupper(std::string& string){
     }
 }
 
+
 int main() {
     MarketData md;
     auto env = loadEnv(".env");
@@ -50,9 +51,9 @@ int main() {
 
     Portfolio pf(10000.0);
     TradeHistory th;
-    Simulator sim(md, pf, th);
+    Simulator* sim = Simulator::GetInstance(md, pf, th);
 
-    sim.run("ABAT", 0, 365 * 10);  // simulate over 10 years
+    sim->run("ABAT", 0, 365 * 10);  // simulate over 10 years
 
     std::cout << "\nFinal Portfolio Value: $"
               << pf.getCash() << " + holdings value\n";

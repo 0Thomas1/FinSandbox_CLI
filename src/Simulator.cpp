@@ -45,3 +45,14 @@ void Simulator::run(const std::string& symbol, int startIdx, int endIdx) {
     history.print();
     history.saveCSV("trade_history.csv");
 }
+
+Simulator* Simulator::simulator_= nullptr;
+
+Simulator *Simulator::GetInstance(MarketData& md, Portfolio& pf, TradeHistory& th){
+    if(simulator_==nullptr){
+        simulator_ = new Simulator(md,pf,th);
+    }
+    return simulator_;
+}
+
+
