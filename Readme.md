@@ -9,8 +9,8 @@ FinSandbox_CLI is a command-line tool under development. Core features, commands
 
 ## Current status
 - Repository scaffolded
-- Core functionality: in progress
-- Documentation: minimal (this README)
+- Core functionality: Support algorithm trading
+
 
 
 License: TBD
